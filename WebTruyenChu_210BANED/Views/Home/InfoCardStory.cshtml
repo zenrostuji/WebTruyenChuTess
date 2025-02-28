@@ -1,0 +1,137 @@
+﻿@model StoryCard
+
+<div class="info-card-story-container">
+    <div class="info-card-story">
+        <img src="@Model.ImageUrl" alt="@Model.Title" class="story-image" />
+       
+        <div class="info-text if-t">
+            <h2 class="story-title">@Model.Title</h2>
+            <p class="story-genre">Thể loại: @Model.Genre</p>
+            <div class="story-actions ">
+                <a href="@Url.Action("Read", "Story", new { id = Model.FirstChapterId })" class="btn-custom btn-primary">
+                    Đọc từ đầu
+                </a>
+                <a href="@Url.Action("Read", "Story", new { id = Model.LatestChapterId })" class="btn-custom btn-success">
+                    Đọc mới nhất
+                </a>
+            </div>
+        </div>
+        <!--div class="list-chap-base">
+            <div class="list-chap">
+                <a href="#">CHAP 5</a>
+                <a href="#">CHAP 4</a>
+                <a href="#">CHAP 3</a>
+                <a href="#">CHAP 2</a>
+            </div>
+        </!--div-->
+       
+    </div>
+    <div class="mo-ta">
+        <a href="#" class="content-info">MO TA TRUYEN</a>
+    </div>
+</div>
+
+
+<style>
+
+    <!-- bang mo ta-- >
+    .mo-ta {
+        margin-top: 10px;
+        height: 200px;
+        background-color: azure;
+        border-radius: 20px;
+    }
+
+    .content-info {
+        margin-left: 40%;
+        text-align: center;
+    }
+    .info-card-story-container{
+        margin-top: 100px;
+    }
+    .info-card-story{
+        display: flex;
+    }
+    .story-card {
+        display: inline-block;
+        margin: 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .story-actions{
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .btn-custom{
+        margin-left: 10px;
+        border-radius: 30px;
+        height: 25px;
+        width: 100%;
+        text-align:center;
+        font-size: 15px;
+        text-decoration: none;
+        margin-top: 75%;
+    }
+    .btn-custom:hover{
+       transform: scale(1.1); 
+    }
+    .if-t{
+        margin-left: 15px;
+        background-color: white;
+        border-radius:15px;
+        padding:5px;
+    }
+    .ui-card img {
+        width: 200px;
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .info-card-story {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .story-image {
+        max-width: 250px;
+        width: 55%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 5px solid white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .story-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .story-genre {
+        font-size: 18px;
+        color: #666;
+    }
+
+    .story-actions {
+        margin-top: 15px;
+    }
+
+    .story-actions .btn {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    <!-- bang danh sach chap-->
+    .list-chap-base{
+        margin-left: 15px;
+        background-color:blueviolet;
+        border-radius: 20px;
+    }
+
+</style>

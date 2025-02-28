@@ -1,0 +1,73 @@
+﻿@model WebTruyenChu_210BANED.Models.userModel
+
+<div class="container">
+    <div class="custom-page-login">
+        <h2 class="hd-lb">Đăng nhập</h2>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        <form method="post" asp-controller="Account" asp-action="Login">
+
+            <div class="custom-p mb-3">
+                <label for="username" class="form-label">Tên người dùng</label>
+                <input type="text" class="form-control" id="username" asp-for="Username">
+                <span class="text-danger" asp-validation-for="Username"></span>
+            </div>
+            <!--div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" asp-for="Email">
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </!--div-->
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="password" asp-for="Password">
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a asp-action="Register" class="text-decoration-none">Đăng ký tài khoản mới</a> |
+            <a asp-action="ForgotPassword" class="text-decoration-none">Quên mật khẩu?</a>
+        </div>
+    </div>
+    
+</div>
+<style>
+    .container{
+       margin-top: 20px;
+       align-items:center;
+       justify-items: center;
+       
+    }
+
+    .rp-custom {
+        justify-items: center;
+        border-radius: 20px;
+    }
+    .custom-page-login{
+        margin-top: 150px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+        border-radius: 20px;
+        background-color: white !important;
+        width: 500px;
+        justify-items: center;
+        padding: 1%;
+    }
+
+    .hd-lb{
+       margin-top: 5%;
+
+       font-size: 30px;
+       color: #22b2d2;
+    }
+
+    .custom-p{
+       align-items: center;
+       width: 400px;
+       border-radius: 20px ;
+    }
+</style>

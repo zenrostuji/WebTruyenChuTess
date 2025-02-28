@@ -1,0 +1,54 @@
+﻿@model WebTruyenChu_210BANED.Models.userModel
+
+<div class="align-baseline"> 
+    <div class="register-cantainer">
+        <h2 class="hd-lb">Đăng Ký</h2>
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
+        <form method="post" action="/Account/Register">
+            <div class="mb-3">
+                <label class="form-label">Tên người dùng</label>
+                <input type="text" class="form-control" asp-for="Username" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" asp-for="Email" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" asp-for="Password" required>
+            </div>
+            <button type="submit" class="btn-regis btn-primary w-100">Đăng ký</button>
+        </form>
+
+    </div>
+</div>
+
+
+<style>
+    .align-baseline{
+        justify-items:center;
+
+    }
+    .register-cantainer{
+        width: 450px;
+        padding: 20px;
+        margin-top: 100px;
+        border-radius: 20px;
+        background-color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .hd-lb {
+        text-align:center;
+        font-size: 30px;
+        color: #22b2d2;
+    }
+
+    .btn-regis {
+        border-radius: 20px !important;
+        font-size: 20px;
+    }
+</style>

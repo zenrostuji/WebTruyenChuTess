@@ -1,0 +1,10 @@
+﻿@model WebTruyenChu_210BANED.Models.StoryCard
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+<img src="@Model.ImageUrl" alt="@Model.Title" style="max-width: 400px; display: block; margin-bottom: 10px;" />
+<p>Thông tin chi tiết về truyện này...</p>
+<a asp-controller="Story" asp-action="Index">Quay lại</a>

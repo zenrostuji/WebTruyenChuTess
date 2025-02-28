@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "WebTruyenChu_210BANED/1.0.0": {
+        "runtime": {
+          "WebTruyenChu_210BANED.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WebTruyenChu_210BANED/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

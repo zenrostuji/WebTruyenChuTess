@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\WebTruyenChu_210BANED.props" />
+</Project>

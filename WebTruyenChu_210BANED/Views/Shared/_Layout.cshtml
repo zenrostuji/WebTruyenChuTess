@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - 210BANED</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebTruyenChu_210BANED.styles.css" asp-append-version="true" />
+</head>
+<body>
+
+    <script>
+        document.addEventListener("keydown", function (event) {
+            if ((event.ctrlKey || event.metaKey) &&
+                (event.key === "+" || event.key === "-" || event.key === "0")) {
+                event.preventDefault();
+            }
+        });
+        document.addEventListener("wheel", function (event) {
+            if (event.ctrlKey) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo0002.png" alt="210BANED Logo" height="40" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="follow_p">Follow</a>
+                        </li>
+                       
+
+                    </ul>
+                    <form class="search-form d-flex" asp-controller="Home" asp-action="Search" method="get">
+                        <input class="form-control search-input" type="text" name="query" placeholder="Nhập tên truyện cần tìm..." required>
+                        <button class="btn search-button" type="submit">Search</button>
+                    </form>
+                    <!-- Kiểm tra nếu đã đăng nhập -->
+                    @if (Context.Session.GetString("Username") != null)
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                                <img src="~/images/avatar.jpg" alt="Avatar" height="30" class="rounded-circle"> @Context.Session.GetString("Username")
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Tài khoản</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class=" dropdown-item dropdown-item-logout" asp-controller="Account" asp-action="Logout">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Nếu chưa đăng nhập -->
+                        <a class="btn-login-frm" data-bs-toggle="modal" data-bs-target="#loginModal">Đăng nhập</a>
+                    }
+                </div>
+            </div>
+        </nav>
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Đăng nhập</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="loginForm" method="post" action="/Account/Login">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Tên người dùng</label>
+                                <input type="text" class="form-control" id="username" name="Username" required>
+                            </div>
+                            <!--div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="Email" required>
+                            </!--div-->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mật khẩu</label>
+                                <input type="password" class="form-control" id="password" name="Password" required>
+                            </div>
+                            <button type="submit" class="btn-loginfrm">Đăng nhập</button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <!--a href="/Account/Register" class="text-decoration-none">Đăng ký tài khoản mới</!--a--> 
+                            <a href="/Account/Register" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#registerModal">Đăng ký tài khoản mới</a> |
+
+                            <a href="/Account/ForgotPassword" class="text-decoration-none">Quên mật khẩu?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Đăng ký Modal -->
+        <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title-re" id="registerModalLabel">Đăng ký tài khoản</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="registerForm" method="post" action="/Account/Register">
+                            <div class="mb-3">
+                                <label for="regUsername" class="form-label">Tên người dùng</label>
+                                <input type="text" class="form-control" id="regUsername" name="Username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="regEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="regEmail" name="Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="regPassword" class="form-label">Mật khẩu</label>
+                                <input type="password" class="form-control" id="regPassword" name="Password" required>
+                            </div>
+                            <button type="submit" class="btn-register ">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - WebTruyenChu_210BANED - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
