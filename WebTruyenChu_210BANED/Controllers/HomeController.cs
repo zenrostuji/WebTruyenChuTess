@@ -14,7 +14,26 @@ namespace WebTruyenChu_210BANED.Controllers
         {
             _logger = logger;
         }
+        //category page
+        public IActionResult Category(string genre, int page = 1)
+        {
+            var filteredStories = string.IsNullOrEmpty(genre)
+            ? stories
+            : stories.Where(s => s.Genre == genre).ToList();
 
+            int pageSize = 4;
+            var paginatedStories = filteredStories.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling(filteredStories.Count / (double)pageSize);
+            ViewBag.SelectedGenre = genre;
+
+            return View("Index", paginatedStories);
+
+        }
+
+
+        //info page
         [Route("InfoCardStory/{id}")]
         public IActionResult InfoCardStory(int id)
         {
@@ -51,6 +70,7 @@ namespace WebTruyenChu_210BANED.Controllers
             return View("SearchResults", results);
         }
 
+        //data tess
         private static List<StoryCard> stories = new List<StoryCard>
         {
             new () { Id = 1, Title = "Nguyện Vọng cuối cùng", ImageUrl = "https://storage.googleapis.com/july-bucket/Rny4s5DwqrVVX1nvM8WZij4R",Genre = "Tiểu thuyết", Author = "Fujiko F. Fujio" },
