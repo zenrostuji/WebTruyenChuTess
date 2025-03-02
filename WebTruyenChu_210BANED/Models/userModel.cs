@@ -16,4 +16,12 @@ namespace WebTruyenChu_210BANED.Models
         public string? Password { get; set; }
     }
 
+    public class FollowedStory
+    {
+        public int Id { get; set; }
+        public string UserId { get; set; } // ID của user theo dõi truyện
+        public int StoryId { get; set; } // ID của truyện được theo dõi
+        public StoryCard Story { get; set; } // Liên kết đến bảng Story
+    }
+
 }

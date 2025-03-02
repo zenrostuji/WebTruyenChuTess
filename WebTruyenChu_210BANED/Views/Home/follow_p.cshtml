@@ -10,7 +10,7 @@
     @foreach (var story in Model)
     {
         <div class="story-card">
-            <a class="ui-card" href="@Url.Action("Details", "StoryCard", new { id = story.Id })">
+            <a class="ui-card" href="@Url.Action("InfoCardStory", "Home", new { id = story.Id })">
                 <img src="@story.ImageUrl" alt="@story.Title" />
                 <div class="story-title">@story.Title</div>
             </a>
@@ -19,23 +19,7 @@
 </div>
 
 <!-- Pagination -->
-<div class="pagination">
-    <button class="page-button" onclick="location.href='@Url.Action("Index", "StoryCard", new { page = currentPage - 1 })'" @(currentPage == 1 ? "disabled" : "")>
-        <
-    </button>
 
-    @for (int i = 1; i <= totalPages; i++)
-    {
-        <button class="page-button @(currentPage == i ? "active" : "")"
-                onclick="location.href='@Url.Action("Index", "StoryCard", new { page = i })'">
-            @i
-        </button>
-    }
-
-    <button class="page-button" onclick="location.href='@Url.Action("Index", "StoryCard", new { page = currentPage + 1 })'" @(currentPage == totalPages ? "disabled" : "")>
-        >
-    </button>
-</div>
 
 <style>
     .label-p {

@@ -11,4 +11,5 @@
         public int LatestChapterId { get; set; }
     }
 
+
 }

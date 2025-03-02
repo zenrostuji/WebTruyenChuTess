@@ -70,14 +70,21 @@
                         <button class="btn search-button" type="submit">Search</button>
                     </form>
                     <!-- Kiểm tra nếu đã đăng nhập -->
+                    @{
+                        var avatarPath = Context.Session.GetString("AvatarPath") ?? "/images/avatar.jpg";
+                    }
+
                     @if (Context.Session.GetString("Username") != null)
                     {
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
-                                <img src="~/images/avatar.jpg" alt="Avatar" height="30" class="rounded-circle"> @Context.Session.GetString("Username")
+                                <!--img src="~/images/avatar.jpg" alt="Avatar" height="30" class="rounded-circle"> @Context.Session.GetString("Username")-->
+                                <img src="@avatarPath" alt="Avatar" height="30" class="rounded-circle"> @Context.Session.GetString("Username")
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Tài khoản</a></li>
+                                <!--li><a class="dropdown-item" href="#">Tài khoản</a></!--li-->
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="UserPage">Tài khoản</a></li>
+
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class=" dropdown-item dropdown-item-logout" asp-controller="Account" asp-action="Logout">Đăng xuất</a></li>
                             </ul>

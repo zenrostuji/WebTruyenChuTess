@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using WebTruyenChu_210BANED.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebTruyenChu_210BANED.Controllers
 {
@@ -54,7 +55,6 @@ namespace WebTruyenChu_210BANED.Controllers
                 LatestChapterId = 10 // Giả định chap mới nhất có ID = 10
             };
 
-            //return View(viewModel);
             return View("InfoCardStory", story);
         }
 
@@ -94,24 +94,94 @@ namespace WebTruyenChu_210BANED.Controllers
 
             return View(currentStories);
         }
+        // follow page
 
-        public IActionResult follow_p(int page = 1)
+        // Lưu danh sách truyện đã theo dõi trong bộ nhớ tạm
+        private static Dictionary<string, List<int>> followedStories = new Dictionary<string, List<int>>();
+
+        [Authorize]
+        public IActionResult follow_p()
         {
-            int totalStories = stories.Count;
-            int totalPages = (int)System.Math.Ceiling((double)totalStories / ITEMS_PER_PAGE);
+            var userId = User.Identity.Name;
 
-            var currentStories = stories.Skip((page - 1) * ITEMS_PER_PAGE).Take(ITEMS_PER_PAGE).ToList();
+            // Kiểm tra nếu user chưa theo dõi truyện nào
+            if (!followedStories.ContainsKey(userId))
+            {
+                followedStories[userId] = new List<int>();
+            }
 
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = totalPages;
+            // Lấy danh sách truyện theo ID đã theo dõi
+            var followedStoryList = stories.Where(s => followedStories[userId].Contains(s.Id)).ToList();
 
-            return View(currentStories);
+            return View(followedStoryList);
         }
 
+        [Authorize]
+        [HttpPost]
+        public IActionResult FollowStory(int storyId)
+        {
+            var userId = User.Identity.Name;
+
+            if (!followedStories.ContainsKey(userId))
+            {
+                followedStories[userId] = new List<int>();
+            }
+
+            // Chỉ thêm nếu chưa theo dõi
+            if (!followedStories[userId].Contains(storyId))
+            {
+                followedStories[userId].Add(storyId);
+            }
+
+            return RedirectToAction("follow_p");
+        }
+
+        //[Authorize] // Chỉ hiển thị khi user đăng nhập
+        //public IActionResult follow_p()
+        //{
+        //    var userId = User.Identity.Name;
+        //    var followedStories = _context.FollowedStories
+        //        .Where(f => f.UserId == userId)
+        //        .Include(f => f.Story)
+        //        .Select(f => f.Story)
+        //        .ToList();
+
+        //    return View(followedStories);
+        //}
+
+
+        //[Authorize] // Chỉ cho phép người dùng đã đăng nhập
+        //[HttpPost]
+        //public IActionResult FollowStory(int storyId)
+        //{
+        //    var userId = User.Identity.Name; // Lấy thông tin user
+
+        //    if (!_context.FollowedStories.Any(f => f.UserId == userId && f.StoryId == storyId))
+        //    {
+        //        var followedStory = new FollowedStory
+        //        {
+        //            UserId = userId,
+        //            StoryId = storyId
+        //        };
+        //        _context.FollowedStories.Add(followedStory);
+        //        _context.SaveChanges();
+        //    }
+
+        //    return RedirectToAction("follow_p"); // Chuyển hướng đến trang truyện đã theo dõi
+        //}
+
+        // kheu donate page :)))
         public IActionResult Privacy()
         {
             return View();
         }
+        //user info page
+        public IActionResult UserPage()
+        {
+            return View();
+        }
+
+        //--------------
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

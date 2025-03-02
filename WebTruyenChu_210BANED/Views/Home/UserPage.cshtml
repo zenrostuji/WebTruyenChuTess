@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Thông tin tài khoản";
+    var username = Context.Session.GetString("Username");
+    var avatarPath = Context.Session.GetString("AvatarPath") ?? "/images/avatar.jpg";
+}
+
+<div class="container mt-5">
+    <div class="card text-center shadow-lg p-4">
+        @if (!string.IsNullOrEmpty(username))
+        {
+            <form id="avatarForm" method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="UploadAvatar">
+                <label for="avatarInput">
+                    <img src="@avatarPath" id="avatarPreview" alt="Avatar" class="rounded-circle mx-auto d-block"
+                         style="width: 150px; height: 150px; cursor: pointer;">
+                </label>
+                <input type="file" id="avatarInput" name="avatarFile" accept="image/*" hidden onchange="previewAndUpload()">
+                <input type="hidden" name="username" value="@username">
+            </form>
+            <h2 class="mt-3">@username</h2>
+        }
+        else
+        {
+            <p class="text-muted">Bạn chưa đăng nhập. Vui lòng đăng nhập để xem thông tin tài khoản.</p>
+            <a href="/" class="btn btn-primary">Về trang chủ</a>
+        }
+    </div>
+</div>
+
+<script>
+    function previewAndUpload() {
+        var input = document.getElementById('avatarInput');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('avatarPreview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+
+            // Gửi form tự động sau khi chọn ảnh
+            document.getElementById('avatarForm').submit();
+        }
+    }
+</script>
+<script>
+    document.getElementById('avatarForm').onsubmit = function (event) {
+        event.preventDefault(); // Ngăn form reload trang
+
+        var formData = new FormData(this);
+
+        fetch('/Account/UploadAvatar', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('avatarPreview').src = data.avatarUrl; // Cập nhật ảnh trong User Page
+                    document.getElementById('navbarAvatar').src = data.avatarUrl; // Cập nhật avatar trên navbar
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => console.error('Lỗi:', error));
+    };
+</script>
+

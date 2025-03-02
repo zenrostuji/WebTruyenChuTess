@@ -7,6 +7,14 @@
         <div class="info-text if-t">
             <h2 class="story-title">@Model.Title</h2>
             <p class="story-genre">Thể loại: @Model.Genre</p>
+            <p class="story-genre">Tác Giả: @Model.Author</p>
+            <form method="post" asp-controller="Home" asp-action="FollowStory">
+                <input type="hidden" name="storyId" value="@Model.Id" />
+                <button type="submit" class="btn-folow-custom btn-success">
+                    Theo Dõi Truyện 
+                </button>
+            </form>
+
             <div class="story-actions ">
                 <a href="@Url.Action("Read", "Story", new { id = Model.FirstChapterId })" class="btn-custom btn-primary">
                     Đọc từ đầu
@@ -34,7 +42,7 @@
 
 <style>
 
-    <!-- bang mo ta-- >
+    /*-- bang mo ta*/
     .mo-ta {
         margin-top: 10px;
         height: 200px;
@@ -118,7 +126,8 @@
     }
 
     .story-actions {
-        margin-top: 15px;
+       margin-top: -10%;
+       min-width: 250px;
     }
 
     .story-actions .btn {
@@ -126,12 +135,17 @@
         padding: 10px 20px;
         font-size: 16px;
     }
-
+    /*nut theo doi (aka dev: ten class nghe nhu bien thai qua :v */
+    .btn-folow-custom{
+        width: 80%;
+        border-radius: 20px;
+    }
     <!-- bang danh sach chap-->
     .list-chap-base{
         margin-left: 15px;
         background-color:blueviolet;
         border-radius: 20px;
+        border: none;
     }
 
 </style>
